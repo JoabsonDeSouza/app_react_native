@@ -23,6 +23,7 @@ export const TypeTitle = styled.Text`
 
 export const TypeDescription = styled.Text`
   font-size: 14px;
+  align-items: center;
   color: 666;
 `;
 

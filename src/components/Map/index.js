@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { View, PermissionsAndroid, Image } from 'react-native';
+import { View, PermissionsAndroid, Image, StyleSheet } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import Geocoder from 'react-native-geocoding';
 import Search from '../Search';
@@ -30,6 +30,14 @@ export default class Map extends Component {
       duration: null,
       location: null,
     };
+
+    this.changeState = this.changeState.bind(this);
+  }
+
+  changeState() {
+    this.setState({
+      destination: null,
+    });
   }
 
   async componentDidMount() {
@@ -84,7 +92,7 @@ export default class Map extends Component {
       },
       {
         timeout: 2000,
-        enableHighAccuracy: true,
+        enableHighAccuracy: false,
         maximumAge: 2000,
       }
     );
@@ -109,12 +117,12 @@ export default class Map extends Component {
   };
 
   render() {
-    const { region, destination, duration, location } = this.state;
+    const { region, destination, duration, location, teste } = this.state;
 
     return (
       <View style={{ flex: 1 }}>
         <MapView
-          style={{ flex: 1 }}
+          style={{ flex: 1, ...StyleSheet.absoluteFillObject }}
           region={region}
           showsUserLocation={true}
           loadingEnabled={true}
@@ -165,7 +173,7 @@ export default class Map extends Component {
             <Back onPress={this.handlerBack}>
               <Image source={backImage} />
             </Back>
-            <Details />
+            <Details changeState={this.changeState} />
           </Fragment>
         ) : (
           <Search onLocationSelected={this.handleLocationSelected} />
